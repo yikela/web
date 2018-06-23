@@ -2,9 +2,9 @@
   <div class="notice">
       <h3>公告</h3>
       <ul>
-        <li><a href="#" title="全新HGC夺宝游戏正式上线">全新HGC夺宝游戏正式上线</a></li>
-        <li><a href="#" title="全新HGC夺宝游戏正式上线">全新HGC夺宝游戏正式上线</a></li>
-        <li><a href="#" title="全新HGC夺宝游戏正式上线">全新HGC夺宝游戏正式上线</a></li>
+        <li v-for="(i,index) in items">
+          <a href="#" :title="i.title">{{i.title}}</a>
+        </li>
       </ul>
   </div>
 </template>
@@ -13,8 +13,20 @@ export default {
   name: 'notice',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      items:[],
     }
+  },
+  methods:{
+     getList(){
+      API.get(API.noticeList.url,{},{}).then(res => {
+      if(res.data.code == 200){
+        this.items = res.data.data;
+      }
+      })
+    },
+  },
+  mounted(){
+    this.getList()
   }
 }
 </script>

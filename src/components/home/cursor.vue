@@ -6,13 +6,33 @@
     </div>
 </template>
 <script>
-export default{
+export default {
     name: 'cursors',
     data(){
         return{
-            msg: 'Welcome to Your Vue.js App'
+            items:null,
         }
-    }
+    },
+    computed:{
+            // ...mapGetters(['userLoginToken']),
+        },
+        methods:{
+            // ...mapMutations(['USER_SIGNIN']),
+            // ...mapActions(['userLogout', 'userLogin']),
+            getList(){
+            API.get(API.swiperList.url,{},{}).then(res => {
+            if(res.data.code == 200){
+                this.items = res.data.data;
+            }
+            })
+            },
+        },
+        created(){
+
+        },
+        mounted(){
+            this.getList()
+        }
 }
 </script>
 <style scoped>

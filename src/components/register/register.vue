@@ -8,30 +8,31 @@
                     </div>
                     <div class="login_table">
                         <div class="login_item">
-                            <input type="text" placeholder = "请输入手机号码"/>
+                            <input type="text" placeholder = "请输入手机号码" v-model="phone"/>
                         </div>
                         <div class="yzm">
-                            <input  placeholder = "请输入验证码"/>
-                            <span class="on"><a href="#">获取验证码</a></span>
+                            <input  placeholder = "请输入验证码" v-model="messagecode"/>
+                            <span class="on" v-if="sendMsgDisabled"  >{{time+'s后获取'}}</span>
+                            <span class="on" @click="sendCode()" v-if="!sendMsgDisabled" >获取验证码</span>
                         </div>
                         <div class="login_item">
-                            <input type="text" placeholder = "请输入邮箱"/>
+                            <input type="text" placeholder = "请输入邮箱" v-model="email"/>
                         </div>
                         <div class="login_item">
-                            <input type="text" placeholder = "请输入生日"/>
+                            <input type="text" placeholder = "请输入生日" v-model="birth"/>
                         </div>
                         <div class="login_item">
-                            <input type="password" placeholder = "请输入密码"/>
+                            <input type="password" placeholder = "请输入密码" v-model="password"/>
                         </div>
                         <div class="login_item">
-                            <input type="password" placeholder = "请确认密码"/>
+                            <input type="password" placeholder = "请确认密码" v-model="secPassword"/>
                         </div>
                         <div class="login_item">
-                            <input type="text" placeholder = "请输邀请码"/>
+                            <input type="text" placeholder = "请输邀请码" v-model="ref"/>
                         </div>
                         <div class="login_error fl"><i></i>您输入的手机号有误！</div>
-                        <div class="login_btn">
-                            <button>注册</button>
+                        <div class="login_btn" @click="clickRegister()">
+                            <button >注册</button>
                         </div>
                         <div class="other_login fl">
                             <span>已有账号，</span>
@@ -44,14 +45,106 @@
     </div>
 </template> 
 <script>
+import {
+    mapState,
+    mapGetters,
+    mapMutations,
+    mapActions
+  } from 'vuex'
 export default {
     name: 'register',
     data () {
         return {
-        msg: 'Welcome to Your Vue.js App'
+            phone:null,
+            password:null,
+            messagecode:null,
+            email:null,
+            secPassword:null,
+            time: 60, // 发送验证码倒计时
+            sendMsgDisabled: false,
+            birth:'2000-11-11',
+            ref:'',
 
         }
+    },
+    computed:{
+        ...mapGetters(['userLoginToken']),
+    },
+  methods:{
+    ...mapMutations(['USER_SIGNIN']),
+    ...mapActions(['userLogout', 'userLogin']),
+    clickRegister(){
+        alert('2222')
+      var regPhone = /^1(3|4|5|7|8)\d{9}$/;
+      var regEmail = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
+      if(!this.phone || !this.messagecode || !this.password || !this.secPassword || !this.email){
+        alert('请填写相关信息');
+        return false
+      }
+      if (!regPhone.test(this.phone)) {
+        alert('手机号码格式不正确');
+          return false
+      }
+      if (!regEmail.test(this.email)) {
+       alert('邮箱格式不正确');
+          return false
+      }
+
+      if(this.password !== this.secPassword){
+        alert('两次密码不一致');
+          return false
+      }
+      
+        const params = {
+          "password": this.password,
+          "password2": this.secPassword,
+          "tel": this.phone,
+          "email": this.email,
+          "date_of_birth": this.birth,
+          "captcha": this.messagecode,
+          "ref": this.ref
+        };
+        API.post(API.register.url,{},params).then(res => {
+          if(res.data.code == 200){
+            this.$router.push('/login')
+          }else{
+            alert(res.data.msg)
+          }
+        })
+    },
+    sendCode(){
+      var regPhone = /^1(3|4|5|7|8)\d{9}$/;
+        //针对大陆号码做判断
+        
+        if (!regPhone.test(this.phone)) {
+            alert('手机号码格式不正确');
+            return false
+        }else{
+          API.post(API.sendCode.url,{},{"tel":this.phone}).then(res => {
+            if(res.data.code == 200){
+              this.send()
+            }
+          })
+          
+        }
+        
+    },
+    send() {
+      let self = this;
+      self.sendMsgDisabled = true;
+      let interval = window.setInterval(function() {
+      if ((self.time--) <= 0) {
+        self.time = 60;
+        self.sendMsgDisabled = false;
+        window.clearInterval(interval);
+      }
+      }, 1000);
     }
+  },
+  mounted(){
+      console.log(1111)
+  }
+   
 }
 </script>
 
@@ -144,7 +237,7 @@ export default {
   box-sizing:border-box;
   font-size: 14px;
 }
-.yzm .on a {
+.yzm .on {
   color: #fff;
   padding: 8px 15px;
   font-size: 14px;

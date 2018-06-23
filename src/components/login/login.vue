@@ -15,7 +15,7 @@
                     </div>
                     <div class="login_error fl"><i></i>您输入的手机号有误！</div>
                     <div class="login_btn">
-                        <button  @click="loginBtn">登录</button>
+                        <button  @click="clickLogin()">登录</button>
                     </div>
                     <div class="other_login fl">
                         <span>没有账号，</span>
@@ -30,36 +30,47 @@
 </template>
 
 <script>
+import {
+    mapState,
+    mapGetters,
+    mapMutations,
+    mapActions
+  } from 'vuex'
 export default {
   name: 'login',
   data () {
     return {
-      username:'',
-      password:''
+      msg: 'Welcome to Your Vue.js App',
+      username:null,
+      password:null,
     }
   },
+  components:{
+  },
+  computed:{
+    ...mapGetters(['userLoginToken']),
+  },
   methods:{
-    loginBtn:function(){
-      var self = this;
-      if(self.username !== '' && self.password !== ''){
-        const fd = new FormData();
-        fd.append('username', self.username);
-        fd.append('password', self.password);
-        self.$ajax({
-          method: 'post',
-          url: '/api/1/auth/login',
-          data: fd,
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          }
-        }).then(function (success) {
-          console.log(success);
+    ...mapMutations(['USER_SIGNIN']),
+    ...mapActions(['userLogout', 'userLogin']),
+    clickLogin(){
+        const params = {
+            username:this.username,
+            password:this.password
+        };
+        this.userLogin(params).then(res => {
+            if(res.data.code == 200){
+              this.USER_SIGNIN(res.data.session);
+              this.$router.push('/');
+              console.log(this.$router)
+            }else{
+              this.$vux.toast.text(res.data.msg.zh, 'top');
+            }
         })
-        .catch(function (error) {
-          console.log(error);
-        });
-      }
     }
+  },
+  mounted(){
+      console.log(1111)
   }
 }
 </script>

@@ -1,12 +1,27 @@
 import axios from 'axios'
+var qs = require('qs');
 const restApi = (() => {
-    // axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
+    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+    console.log(this.$qs);
     // axios.defaults.baseURL = '/api';
     let ajax = axios;
     const restApi = {
         // 登录
         login: {
             url: '/1/auth/login',
+        },
+        //发送验证码
+        sendCode:{
+          url:'/1/register/new-captcha'
+        },
+        //注册
+        register:{
+          url:"/1/register/add"
+        },
+        //找回密码
+        findpwd:{
+          url:'/1/register/reset-password'
         },
         //退出登陆
         logout: {
@@ -16,24 +31,71 @@ const restApi = (() => {
         isLogin:{
             url:'/1/auth/is-logged-in'
         },
-        //商品列表
-        sellList:{
+        //即将开奖
+        nearClose:{
+          url:"/1/sell/near-close"
+        },
+        //最新上架
+        newsgoods:{
             url:'/1/sell/list'
         },
-        //获奖者
-        winner:{
-            url:'/1/sell/winner'
+        //最新开奖
+        winners:{
+            url:'/1/sell/winners'
         },
-        get: function(api_url, urlParams, success) {
+        //商品信息
+        goodDetial:{
+            url:'/1/sell/detail?id={id}'
+        },
+        //购买信息
+        boughtList:{
+            url: '/1/bought/list'
+        },
+        //购买
+        buyGoods:{
+            url:'/1/sell/user-buy'
+        },
+        //公告列表
+        noticeList:{
+          url:'/1/message/list'
+        },
+        swiperList:{
+          url:'/1/message/slide-list'
+        },
+        //获取充值地址
+        getRechargeAd:{
+          url:'/1/merchant/payment-address?session={session}&coin_type={type}'
+        },
+        //获取购买记录
+        getPayment:{
+          url:'/1/user-payment/list'
+        },
+        //获取资产
+        assetList:{
+          url:'/1/asset/list'
+        },
+        //获取夺宝币
+        getMyCoin:{
+          url:'/1/user/balance'
+        },
+        // 获取游戏币的汇率
+        getExchangeRate:{
+          url:'/1/exchange-rate/exchange-rate'
+        },
+        //兑换游戏币
+        exchangeGameCoin:{
+            url:"/1/asset/to-game-token"
+        },
+        get(api_url, urlParams, success){
             return ajax.get(makeApiUrl(api_url, urlParams))
         },
-        delete:function(api_url, urlParams){
+        delete(api_url, urlParams){
             return ajax.delete(makeApiUrl(api_url, urlParams))
         },
-        post: function(api_url, urlParams, data, headers) {
-            return ajax.post(makeApiUrl(api_url, urlParams), data)
+        post(api_url, urlParams, data, headers) {
+            return ajax.post(makeApiUrl(api_url, urlParams), qs.stringify(data))
         },
-        put:function(api_url, urlParams, data, headers){
+        put(api_url, urlParams, data, headers){
             return ajax.put(makeApiUrl(api_url, urlParams), data)
         }
 

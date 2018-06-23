@@ -1,7 +1,7 @@
 import * as types from '../types'
 import router from '../../router'
 const isLoggedIn = function() {
-    let token = localStorage.getItem('winchainuser');
+    let token = localStorage.getItem('winchaintoken');
     if (token) {
         return JSON.parse(token);
     } else {
@@ -15,16 +15,16 @@ const state = {
 }
 
 const getters = {
-    userLoginInfo: state => state.token
+    userLoginToken: state => state.token
 }
 
 const mutations = {
     [types.USER_SIGNIN](state, user) {
-        localStorage.setItem('winchainuser', JSON.stringify(user))
+        localStorage.setItem('winchaintoken', JSON.stringify(user))
         state.token = user
     },
     [types.USER_SIGNOUT](state) {
-        localStorage.removeItem('winchainuser')
+        localStorage.removeItem('winchaintoken')
         state.token = null
     }
 }
@@ -37,7 +37,8 @@ const actions = {
         
     },
     //登出
-    userLogout({ commit }, route) {
+    userLogout({ commit }, data) {
+      return API.post(API.logout.url,{},{session:data})
     },
 }
 

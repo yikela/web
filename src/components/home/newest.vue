@@ -2,29 +2,15 @@
     <div class="newest">
         <div class="newest_title">最新开奖结果</div>
         <ul class="newest_content">
-            <li>
+            <li v-for="(item,index) in items" :key="index" v-if="loading">
                 <a href="#">
                     <dl>
                         <dt>
-                            <p>(第1期)华为手机</p>
-                            <p>总需：<span>699人次</span></p>
-                            <p>获奖者：<span>18565637201</span></p>
-                            <p>本期参与：<span>538人次</span></p>
-                            <p>本期幸运号码：<span>10000600</span></p>
-                        </dt>
-                        <dd><img src="../../assets/img/shop.jpg"></dd>
-                    </dl>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <dl>
-                        <dt>
-                            <p>(第1期)华为手机</p>
-                            <p>总需：<span>699人次</span></p>
-                            <p>获奖者：<span>18565637201</span></p>
-                            <p>本期参与：<span>538人次</span></p>
-                            <p>本期幸运号码：<span>10000600</span></p>
+                            <p>{{item.description.name}}</p>
+                            <p>总需：<span>{{item.price}}人次</span></p>
+                            <p>获奖者：<span>{{item.winner_username}}</span></p>
+                            <!-- <p>本期参与：<span>538人次</span></p> -->
+                            <p>本期幸运号码：<span>{{item.calc_result}}</span></p>
                         </dt>
                         <dd><img src="../../assets/img/shop.jpg"></dd>
                     </dl>
@@ -34,12 +20,32 @@
     </div>
 </template>
 <script>
-    export default{
-        name: 'newest',
+    export default {
+        name: 'new',
         data(){
             return{
-                msg: 'Welcome to Your Vue.js App'
+                loading:false,
+                items:{
+                    description:{
+                        name:null
+                    }
+                }
             }
+        },
+        methods:{
+            getList(){
+                API.get(API.winners.url,{},{}).then(res => {
+                    if(res.data.code ==200){
+                        this.items = res.data.data.slice(0,2);
+                        this.loading = true
+                    }
+                })
+                }
+        },
+        created(){
+            this.getList()
+        },
+        mounted(){
         }
     }
 </script>

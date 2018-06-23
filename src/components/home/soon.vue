@@ -2,22 +2,22 @@
     <div class="soon">
         <div class="soon_title">即将揭晓</div>
         <ul class="soon_content">
-            <li>
+            <li v-for="(item,index) in items">
                 <a href="#">
                     <dl>
                         <dt><img src="../../assets/img/shop1.jpg"></dt>
                         <dd>
                             <p>苹果(APPLE)</p>
-                            <p>价值：<span>￥62.00</span></p>
+                            <p>价值：<span>{{item.price}}</span></p>
                             <div  class="progress">
-                                <span class="bar" id="bar"></span> 
+                                <span class="bar" id="bar" :style="'width:'+ (item.price - item.remaining)*100/(item.price) + '%'"></span> 
                             </div>
                             <ul class="soon_people">
                                 <li>
                                     <p>
-                                        <span>60</span>
-                                        <span>62</span>
-                                        <span>2</span>
+                                        <span>{{item.price - item.remaining}}</span>
+                                        <span>{{item.price}}</span>
+                                        <span>{{ item.remaining}}</span>
                                     </p>
                                     <p>
                                         <span>已参与人次</span>
@@ -26,7 +26,7 @@
                                     </p>
                                 </li>
                             </ul>
-                            <p><button>立即购买</button></p>
+                            <p><router-link class="buy" :disabled="item.remaining == 0 ? true:false"   tag="button" :to="{name: 'goodsDetail', params: { id: item.id}}">立即购买</router-link></p>
                         </dd>
                     </dl>
                 </a>
@@ -35,12 +35,26 @@
     </div>
 </template>
 <script>
-    export default{
+    export default {
         name: 'soon',
         data(){
             return{
-                msg: 'Welcome to Your Vue.js App'
+                items:{
+                    description:{}
+                }
             }
+        },
+        methods:{
+            getList(){
+                API.get(API.nearClose.url,{},{}).then(res => {
+                    if(res.data.code ==200){
+                    this.items = res.data.data
+                    }
+                })
+                }
+        },
+        mounted(){
+            this.getList()
         }
     }
 </script>
@@ -69,6 +83,11 @@
     margin-top:5px;
     border:1px solid #ddd;
 }
+
+    .buy:disabled {
+      color:graytext;
+      background:#cfcfcf
+    }
 .soon_content>li:last-child{
     margin-right:0;
 }
