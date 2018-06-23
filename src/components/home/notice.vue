@@ -2,7 +2,7 @@
   <div class="notice">
       <h3>公告</h3>
       <ul>
-        <li v-for="(i,index) in items">
+        <li v-for="(i,index) in items" :key="index">
           <a href="#" :title="i.title">{{i.title}}</a>
         </li>
       </ul>

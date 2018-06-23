@@ -2,7 +2,7 @@
     <div class="soon">
         <div class="soon_title">即将揭晓</div>
         <ul class="soon_content">
-            <li v-for="(item,index) in items">
+            <li v-for="(item,index) in items" :key="index">
                 <a href="#">
                     <dl>
                         <dt><img src="../../assets/img/shop1.jpg"></dt>

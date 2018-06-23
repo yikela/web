@@ -1,6 +1,9 @@
 <template>
     <div class="newest">
-        <div class="newest_title">最新开奖结果</div>
+        <div class="newest_title">
+            <span class="fl">最新开奖</span>
+            <a href="./newestlist">更多开奖，点击查看>></a>
+        </div>
         <ul class="newest_content">
             <li v-for="(item,index) in items" :key="index" v-if="loading">
                 <a href="#">
@@ -63,7 +66,11 @@
     color:#333;
     text-align:left;
     line-height:54px;
+    background-color:#F0F0F0;
     border-bottom:1px solid #333;
+}
+.newest_title a{
+    float:right;
 }
 .newest_content  li{
     height:158px;

@@ -10,6 +10,7 @@ import findPass from '@/components/findPass/findPass'
 import invite from '@/components/invite/invite'
 import newguide from '@/components/newguide/newguide'
 import novicedetail from '@/components/novicedetail/novicedetail'
+import newestlist from '@/components/newestlist/newestlist'
 Vue.use(Router)
 
 export default new Router({
@@ -64,6 +65,11 @@ export default new Router({
       path: '/novicedetail',
       name: '/novicedetail',
       component: novicedetail
+    },
+    {
+      path: '/newestlist',
+      name: 'newestlist',
+      component: newestlist
     }
   ]
 })
