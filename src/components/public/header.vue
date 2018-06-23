@@ -7,7 +7,7 @@
                 <li><router-link to="/allreward">所有夺宝</router-link></li>
                 <li><router-link to="/reward">开奖记录</router-link></li>
                 <li><router-link to="/invite">邀请有奖</router-link></li>
-                <li><router-link to="/">新手指南</router-link></li>
+                <li><router-link to="/newguide">新手指南</router-link></li>
                 <li>
                     <div class="login_btn">
                         <router-link to="/login">登录</router-link>

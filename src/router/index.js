@@ -8,6 +8,8 @@ import login from '@/components/login/login'
 import register from '@/components/register/register'
 import findPass from '@/components/findPass/findPass'
 import invite from '@/components/invite/invite'
+import newguide from '@/components/newguide/newguide'
+import novicedetail from '@/components/novicedetail/novicedetail'
 Vue.use(Router)
 
 export default new Router({
@@ -40,18 +42,28 @@ export default new Router({
     },
     {
       path: '/login',
-      name: '/login',
+      name: 'login',
       component: login
     },
     {
       path: '/register',
-      name: '/register',
+      name: 'register',
       component: register,
     },
     {
       path: '/findPass',
-      name: '/findPass',
+      name: 'findPass',
       component: findPass
+    },
+    {
+      path: '/newguide',
+      name: 'newguide',
+      component:newguide
+    },
+    {
+      path: '/novicedetail',
+      name: '/novicedetail',
+      component: novicedetail
     }
   ]
 })
