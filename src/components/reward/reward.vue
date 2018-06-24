@@ -1,44 +1,31 @@
 <template>
-  <div class="reward">
+<div>
+  <div class="reward" v-if="loading">
     <div class="reward_title"><b>最新揭晓</b>(到目前为止工揭晓商品<span>106</span>件)</div>
     <ul class="reward_content">
-      <li>
+      <li v-for="(item,index) in items" :key="index">
         <dl>
           <dt><img src="../../assets/img/shop1.jpg"></dt>
           <dd>
               <ul class="reward_people">
                 <li><img src="../../assets/img/shop.jpg"></li>
                 <li>
-                  <p>获得者：<b>xxx</b></p>
-                  <p>云购： <span>538</span>人次</p>
+                  <p>获得者：<b>{{item.winner_username}}</b></p>
+                  <p>云购： <span>{{item.price}}</span>人次</p>
                 </li>
               </ul>
           </dd>
-          <dd>第1期： <span>华为</span></dd>
-          <dd>商品价值：<span>￥699.00</span></dd>
-          <dd>揭晓时间：<span>2015年04月26号</span></dd>
+          <dd>第1期： <span>{{item.description.name}}</span></dd>
+          <dd>商品价值：<span>{{item.price}}</span></dd>
+          <dd>揭晓时间：<span>{{item.updated_at}}</span></dd>
         </dl>
-        <p>幸运云购码：<span>10000600</span><a href="#">查看详情</a></p>
-      </li>
-      <li>
-        <dl>
-          <dt><img src="../../assets/img/shop1.jpg"></dt>
-          <dd>
-              <ul class="reward_people">
-                <li><img src="../../assets/img/shop.jpg"></li>
-                <li>
-                  <p>获得者：<b>xxx</b></p>
-                  <p>云购： <span>538</span>人次</p>
-                </li>
-              </ul>
-          </dd>
-          <dd>第1期： <span>华为</span></dd>
-          <dd>商品价值：<span>￥699.00</span></dd>
-          <dd>揭晓时间：<span>2015年04月26号</span></dd>
-        </dl>
-        <p>幸运云购码：<span>10000600</span><a href="#">查看详情</a></p>
+        <p>幸运云购码：<span>{{item.calc_result}}</span><a href="#">查看详情</a></p>
       </li>
     </ul>
+
+    <div class="more"  v-show="!noMore"><span @click="more()">加载更多</span></div>
+    <div class="more noMore"  v-show="noMore"><span>没有更多了</span></div>
+  </div>
   </div>
 </template>
 
@@ -47,20 +34,78 @@ export default {
   name: 'reward',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      items: [],
+      lastId:null,
+      loading:false,
+      noMore:false
     }
-  }
+  },
+  filters:{
+  },
+  methods:{
+    get_list(){
+        API.get(API.winners.url,{},{}).then(res => {
+            if(res.data.code ==200){
+            this.items =  res.data.data;
+            this.lastId = res.data.data[res.data.data.length -1].id;
+            this.loading = true;
+            if(res.data.data.length < 10){
+                this.noMore = true
+            }
+            }
+        })
+    },
+    more(){
+          let url = API.winners.url + `?cursor_id=${this.lastId}`;
+          API.get(url,{},{}).then(res => {
+            if(res.data.code ==200){
+            this.items =  this.items.concat(res.data.data);
+            this.lastId = res.data.data[res.data.data.length -1].id;
+            this.loading = true;
+            if(res.data.data.length < 10){
+                this.noMore = true
+            }
+            }
+        })
+    }
+},
+mounted(){
+    this.get_list()
+}
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.more{
+    width:100%;
+    height:40px;
+    text-align: center;
+    clear: both;
+    padding-top:20px;
+}
+.more span{
+    display: inline-block;
+    width:100px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    background:#0e90d2;
+    color:#fff;
+    cursor: pointer;
+}
+.noMore span{
+    background:#999;
+    color:#333
+}
 .reward{
   width: 1200px;
   height:100%;
   margin:0 auto;
   overflow:hidden;
   background-color:#fff;
+  padding:10px 0 80px 0;
 }
 .reward_title{
   width:1180px;

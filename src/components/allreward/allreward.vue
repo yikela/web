@@ -1,21 +1,22 @@
 <template>
-    <div class="allreward">
-        <ul class="newshop_content">
-            <li>
+<div>
+    <div class="allreward" v-if="loading">
+        <ul class="newshop_content" >
+            <li v-for="(item,index) in items" :key="index">
                 <a href="#">
                     <dl>
                         <dt><img src="../../assets/img/shop1.jpg"></dt>
                         <dd>
-                            <p>价值：<span>￥62.00</span></p>
+                            <p>价值：<span>{{item.price}}</span></p>
                             <div  class="progress">
-                                <span class="bar" id="bar"></span> 
+                                <span class="bar" id="bar" :style="'width:'+ (item.price - item.remaining)*100/(item.price) + '%'" ></span> 
                             </div>
                             <ul class="newshop_people">
                                 <li>
                                     <p>
-                                        <span>60</span>
-                                        <span>62</span>
-                                        <span>2</span>
+                                        <span>{{item.price - item.remaining}}</span>
+                                        <span>{{item.price}}</span>
+                                        <span>{{ item.remaining}}</span>
                                     </p>
                                     <p>
                                         <span>已参与</span>
@@ -24,12 +25,15 @@
                                     </p>
                                 </li>
                             </ul>
-                            <p><button>立即夺宝</button></p>
+                            <p><router-link class="buy" :disabled="item.remaining == 0 ? true:false"   tag="button" :to="{name: 'goodsDetail', params: { id: item.id}}">我要购买</router-link></p>
                         </dd>
                     </dl>
                 </a>
             </li>
         </ul>
+        <div class="more"  v-show="!noMore"><span @click="more()">加载更多</span></div>
+        <div class="more noMore"  v-show="noMore"><span>没有更多了</span></div>
+    </div>
     </div>
 </template>
 
@@ -38,8 +42,41 @@ export default {
     name: 'allreward',
     data () {
         return {
-            msg: 'Welcome to Your Vue.js App'
+           items: [],
+            lastId:null,
+            loading:false,
+            noMore:false
         }
+    },
+    methods:{
+        get_list(){
+            API.get(API.newsgoods.url,{},{}).then(res => {
+                if(res.data.code ==200){
+                this.items =  res.data.data;
+                this.lastId = res.data.data[res.data.data.length -1].id;
+                this.loading = true;
+                if(res.data.data.length < 10){
+                    this.noMore = true
+                }
+                }
+            })
+        },
+        more(){
+             let url = API.newsgoods.url + `?cursor_id=${this.lastId}`;
+             API.get(url,{},{}).then(res => {
+                if(res.data.code ==200){
+                this.items =  this.items.concat(res.data.data);
+                this.lastId = res.data.data[res.data.data.length -1].id;
+                this.loading = true;
+                if(res.data.data.length < 10){
+                    this.noMore = true
+                }
+                }
+            })
+        }
+    },
+    mounted(){
+        this.get_list()
     }
 }
 </script>
@@ -52,6 +89,7 @@ export default {
     margin:0 auto;
     overflow:hidden;
     background-color:#fff;
+    padding:20px 0 80px 0;
 }
 .newshop_content{
     padding:5px 10px;
@@ -95,6 +133,32 @@ export default {
     -webkit-appearance: button;
     cursor: pointer;
     text-transform: none
+}
+
+.more{
+    width:100%;
+    height:40px;
+    text-align: center;
+    clear: both;
+    padding-top:20px;
+}
+.more span{
+    display: inline-block;
+    width:100px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    background:#0e90d2;
+    color:#fff;
+    cursor: pointer;
+}
+.noMore span{
+    background:#999;
+    color:#333
+}
+.newshop_content>li a dl dd>p button:disabled {
+    color:graytext;
+    background:#cfcfcf;
 }
 .progress { 
 height: 15px;

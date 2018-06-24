@@ -3,11 +3,11 @@
         <div class="header">
             <ul>
                 <li class="login_pic"><router-link to="/"><img src="//www.baidu.com/img/baidu_jgylogo3.gif"></router-link></li>
-                <li><router-link to="/">首页</router-link></li>
-                <li><router-link to="/allreward">所有夺宝</router-link></li>
-                <li><router-link to="/reward">开奖记录</router-link></li>
-                <li><router-link to="/invite">邀请有奖</router-link></li>
-                <li><router-link to="/newguide">新手指南</router-link></li>
+                <li><router-link to="/" active-class="u-link--Active" exact>首页</router-link></li>
+                <li><router-link to="/allreward" active-class="u-link--Active" exact>所有夺宝</router-link></li>
+                <li><router-link to="/reward" active-class="u-link--Active" exact>开奖记录</router-link></li>
+                <li><router-link to="/invite" active-class="u-link--Active" exact>邀请有奖</router-link></li>
+                <li><router-link to="/newguide" active-class="u-link--Active" exact>新手指南</router-link></li>
                 <li>
                     <div class="login_btn">
                         <router-link to="/login">登录</router-link>
@@ -98,4 +98,8 @@ export default {
       border-radius: 0 4px 4px 0;
       margin: 0;
   }    
+
+   ul li a.u-link--Active{
+    color:#dc3838
+  }
 </style>
