@@ -1,6 +1,9 @@
 <template>
     <div class="soon">
-        <div class="soon_title">即将揭晓</div>
+        <div class="soon_title">
+            <span class="fl">即将开奖</span>
+            <a href="./allreward">更多开奖，点击查看>></a>
+        </div>
         <ul class="soon_content">
             <li v-for="(item,index) in items" :key="index">
                 <a href="#">
@@ -73,7 +76,11 @@
     color:#333;
     text-align:left;
     line-height:54px;
+    background-color:#F0F0F0;
     border-bottom:1px solid #333;
+}
+.soon_title a{
+    float:right;
 }
 .soon_content>li{
     float:left;
@@ -83,11 +90,10 @@
     margin-top:5px;
     border:1px solid #ddd;
 }
-
-    .buy:disabled {
-      color:graytext;
-      background:#cfcfcf
-    }
+.buy:disabled {
+    color:graytext;
+    background:#cfcfcf
+}
 .soon_content>li:last-child{
     margin-right:0;
 }
@@ -141,34 +147,34 @@ box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 border-radius: 4px; 
 }
 .progress .bar { 
-width: 49%; 
-height: 100%; 
-color: #ffffff; 
-float: left; 
-font-size: 12px; 
-text-align: center; 
-align-items: center; 
-display: flex; 
-justify-content: center; 
-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); 
-background-color: #0e90d2; 
-background-image: -moz-linear-gradient(top, #FA0019, #FA0019); 
-background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FA0019), to(#FA0019)); 
-background-image: -webkit-linear-gradient(top, #FA0019, #FA0019); 
-background-image: -o-linear-gradient(top, #FA0019, #FA0019); 
-background-image: linear-gradient(to bottom, #FA0019, #FA0019); 
-background-repeat: repeat-x; 
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff149bdf', endColorstr='#ff0480be', GradientType=0); 
--webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); 
--moz-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); 
-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); 
--webkit-box-sizing: border-box; 
--moz-box-sizing: border-box; 
-box-sizing: border-box; 
--webkit-transition: width 0.6s ease; 
--moz-transition: width 0.6s ease; 
--o-transition: width 0.6s ease; 
-transition: width 0.6s ease; 
+    width: 49%; 
+    height: 100%; 
+    color: #ffffff; 
+    float: left; 
+    font-size: 12px; 
+    text-align: center; 
+    align-items: center; 
+    display: flex; 
+    justify-content: center; 
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); 
+    background-color: #0e90d2; 
+    background-image: -moz-linear-gradient(top, #FA0019, #FA0019); 
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FA0019), to(#FA0019)); 
+    background-image: -webkit-linear-gradient(top, #FA0019, #FA0019); 
+    background-image: -o-linear-gradient(top, #FA0019, #FA0019); 
+    background-image: linear-gradient(to bottom, #FA0019, #FA0019); 
+    background-repeat: repeat-x; 
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff149bdf', endColorstr='#ff0480be', GradientType=0); 
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); 
+    -moz-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); 
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); 
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box; 
+    -webkit-transition: width 0.6s ease; 
+    -moz-transition: width 0.6s ease; 
+    -o-transition: width 0.6s ease; 
+    transition: width 0.6s ease; 
 } 
 .soon_people li p span{
     display:block;
