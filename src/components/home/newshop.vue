@@ -2,7 +2,7 @@
     <div class="newshop">
         <div class="newshop_title">
             <span class="fl">最新上架</span>
-            <a href="#">更多新品，点击查看>></a>
+            <a href="./allreward">更多新品，点击查看>></a>
         </div>
         <ul class="newshop_content">
             <li v-for="(item,index) in items" :key="index">
@@ -127,54 +127,54 @@ export default {
     background:#cfcfcf;
 }
 .progress { 
-height: 15px;
-width:100%;
-margin:2px 0;
-overflow: hidden; 
-background-color: #f7f7f7; 
-background-image: -moz-linear-gradient(top, #999999, #999999); 
-background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#999999), to(#999999)); 
-background-image: -webkit-linear-gradient(top, #999999, #999999); 
-background-image: -o-linear-gradient(top, #999999, #999999); 
-background-image: linear-gradient(to bottom, #999999, #999999); 
-background-repeat: repeat-x; 
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff9f9f9', GradientType=0); 
--webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); 
--moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); 
-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); 
--webkit-border-radius: 4px; 
--moz-border-radius: 4px; 
-border-radius: 4px; 
+    height: 15px;
+    width:100%;
+    margin:2px 0;
+    overflow: hidden; 
+    background-color: #f7f7f7; 
+    background-image: -moz-linear-gradient(top, #999999, #999999); 
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#999999), to(#999999)); 
+    background-image: -webkit-linear-gradient(top, #999999, #999999); 
+    background-image: -o-linear-gradient(top, #999999, #999999); 
+    background-image: linear-gradient(to bottom, #999999, #999999); 
+    background-repeat: repeat-x; 
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff9f9f9', GradientType=0); 
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); 
+    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); 
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); 
+    -webkit-border-radius: 4px; 
+    -moz-border-radius: 4px; 
+    border-radius: 4px; 
 }
 .progress .bar { 
-width: 49%; 
-height: 100%; 
-color: #ffffff; 
-float: left; 
-font-size: 12px; 
-text-align: center; 
-align-items: center; 
-display: flex; 
-justify-content: center; 
-text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); 
-background-color: #0e90d2; 
-background-image: -moz-linear-gradient(top, #FA0019, #FA0019); 
-background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FA0019), to(#FA0019)); 
-background-image: -webkit-linear-gradient(top, #FA0019, #FA0019); 
-background-image: -o-linear-gradient(top, #FA0019, #FA0019); 
-background-image: linear-gradient(to bottom, #FA0019, #FA0019); 
-background-repeat: repeat-x; 
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff149bdf', endColorstr='#ff0480be', GradientType=0); 
--webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); 
--moz-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); 
-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); 
--webkit-box-sizing: border-box; 
--moz-box-sizing: border-box; 
-box-sizing: border-box; 
--webkit-transition: width 0.6s ease; 
--moz-transition: width 0.6s ease; 
--o-transition: width 0.6s ease; 
-transition: width 0.6s ease; 
+    width: 49%; 
+    height: 100%; 
+    color: #ffffff; 
+    float: left; 
+    font-size: 12px; 
+    text-align: center; 
+    align-items: center; 
+    display: flex; 
+    justify-content: center; 
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); 
+    background-color: #0e90d2; 
+    background-image: -moz-linear-gradient(top, #FA0019, #FA0019); 
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FA0019), to(#FA0019)); 
+    background-image: -webkit-linear-gradient(top, #FA0019, #FA0019); 
+    background-image: -o-linear-gradient(top, #FA0019, #FA0019); 
+    background-image: linear-gradient(to bottom, #FA0019, #FA0019); 
+    background-repeat: repeat-x; 
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff149bdf', endColorstr='#ff0480be', GradientType=0); 
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); 
+    -moz-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); 
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); 
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box; 
+    -webkit-transition: width 0.6s ease; 
+    -moz-transition: width 0.6s ease; 
+    -o-transition: width 0.6s ease; 
+    transition: width 0.6s ease; 
 }
 .newshop_people li p span{
     display:block;

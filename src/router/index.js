@@ -11,6 +11,7 @@ import invite from '@/components/invite/invite'
 import newguide from '@/components/newguide/newguide'
 import novicedetail from '@/components/novicedetail/novicedetail'
 import newestlist from '@/components/newestlist/newestlist'
+import noticedetail from '@/components/noticedetail/noticedetail'
 Vue.use(Router)
 
 export default new Router({
@@ -70,6 +71,11 @@ export default new Router({
       path: '/newestlist',
       name: 'newestlist',
       component: newestlist
+    },
+    {
+      path: '/noticedetail',
+      name: '/noticedetail',
+      component: noticedetail
     }
   ]
 })
