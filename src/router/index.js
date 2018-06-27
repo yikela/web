@@ -12,6 +12,8 @@ import newguide from '@/components/newguide/newguide'
 import novicedetail from '@/components/novicedetail/novicedetail'
 import newestlist from '@/components/newestlist/newestlist'
 import noticedetail from '@/components/noticedetail/noticedetail'
+import shopdetail from '@/components/shopdetail/shopdetail'
+import newshopdetail from '@/components/newshopdetail/newshopdetail'
 Vue.use(Router)
 
 export default new Router({
@@ -76,6 +78,16 @@ export default new Router({
       path: '/noticedetail',
       name: '/noticedetail',
       component: noticedetail
+    },
+    {
+      path: '/shopdetail',
+      name: '/shopdetail',
+      component: shopdetail
+    },
+    {
+      path: '/newshopdetail',
+      name : '/newhopdetail',
+      component : newshopdetail
     }
   ]
 })

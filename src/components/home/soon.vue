@@ -6,7 +6,7 @@
         </div>
         <ul class="soon_content">
             <li v-for="(item,index) in items" :key="index">
-                <a href="#">
+                <a href="../newshopdetail">
                     <dl>
                         <dt><img src="../../assets/img/shop1.jpg"></dt>
                         <dd>
@@ -127,24 +127,24 @@
     text-transform: none
 }
 .progress { 
-height: 15px;
-width:100%;
-margin:2px 0;
-overflow: hidden; 
-background-color: #f7f7f7; 
-background-image: -moz-linear-gradient(top, #999999, #999999); 
-background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#999999), to(#999999)); 
-background-image: -webkit-linear-gradient(top, #999999, #999999); 
-background-image: -o-linear-gradient(top, #999999, #999999); 
-background-image: linear-gradient(to bottom, #999999, #999999); 
-background-repeat: repeat-x; 
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff9f9f9', GradientType=0); 
--webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); 
--moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); 
-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); 
--webkit-border-radius: 4px; 
--moz-border-radius: 4px; 
-border-radius: 4px; 
+    height: 15px;
+    width:100%;
+    margin:2px 0;
+    overflow: hidden; 
+    background-color: #f7f7f7; 
+    background-image: -moz-linear-gradient(top, #999999, #999999); 
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#999999), to(#999999)); 
+    background-image: -webkit-linear-gradient(top, #999999, #999999); 
+    background-image: -o-linear-gradient(top, #999999, #999999); 
+    background-image: linear-gradient(to bottom, #999999, #999999); 
+    background-repeat: repeat-x; 
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#fff9f9f9', GradientType=0); 
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); 
+    -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); 
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); 
+    -webkit-border-radius: 4px; 
+    -moz-border-radius: 4px; 
+    border-radius: 4px; 
 }
 .progress .bar { 
     width: 49%; 

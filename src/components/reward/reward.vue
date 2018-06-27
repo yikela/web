@@ -22,7 +22,6 @@
         <p>幸运云购码：<span>{{item.calc_result}}</span><a href="#">查看详情</a></p>
       </li>
     </ul>
-
     <div class="more"  v-show="!noMore"><span @click="more()">加载更多</span></div>
     <div class="more noMore"  v-show="noMore"><span>没有更多了</span></div>
   </div>

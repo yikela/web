@@ -6,7 +6,7 @@
         </div>
         <ul class="newest_content">
             <li v-for="(item,index) in items" :key="index" v-if="loading">
-                <a href="#">
+                <a href="../shopdetail">
                     <dl>
                         <dt>
                             <p>{{item.description.name}}</p>
