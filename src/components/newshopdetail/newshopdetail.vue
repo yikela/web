@@ -26,8 +26,23 @@
           </dl>
       </div>
       <div class="soon_buy">我要购买<input type="number" />份</div>
+      <div class="soon_click"><a href="#">确定</a></div>
       <div class="all_buy">
           <div class="allbuy_title">所有参与记录<span>(13000)</span></div>
+          <ul class="allbuy_item">
+                <li>日期</li>
+                <li>参与人</li>
+                <li>购买份数</li>
+          </ul>
+          <div class="allbuy_content">
+              <p>2018年</p>
+          </div>
+          <div class="allbuy_content">
+              <p>Erik</p>
+          </div>
+          <div class="allbuy_content">
+              <p>1000</p>
+          </div>          
       </div>
   </div>
 </template>
@@ -145,13 +160,30 @@
 .soon_people li>p span:nth-child(3){
     text-align:right;
 }
-.soon_buy{
-    width:1200px;    
-
+.soon_buy{ 
+    margin-top:10px;
+    padding:1px;  
+    font-size:14px;
+    text-align:center;
 }
 .soon_buy input{
+    width:200px;
+    height:30px;
+    margin:0 10px;
     border:1px solid #ddd;
+    border-radius:2px;
 }
+.soon_click{
+    width:1200px;
+    margin-top:20px;
+    text-align:center;
+}
+.soon_click a{
+    padding:5px 20px;
+    border:1px solid #ddd;
+    border-radius:4px;
+    
+} 
 .allbuy_title{
     width:1200px;
     height:40px;
@@ -162,5 +194,20 @@
     line-height:40px;
     background-color:#41C7DB;
     border:1px solid #ddd;
+}
+.allbuy_item li{
+    float:left;
+    margin-top:20px;
+    font-size:14px;
+    width:33%;
+    text-align:center;
+}
+.allbuy_content{
+    float:left;
+    width:33%;
+    text-align:center;
+}
+.allbuy_content p{
+    line-height:30px;
 }
 </style>
