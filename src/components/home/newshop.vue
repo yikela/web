@@ -6,7 +6,7 @@
         </div>
         <ul class="newshop_content">
             <li v-for="(item,index) in items" :key="index">
-                <a href="#">
+                <a href="./newshopdetail">
                     <dl>
                         <dt><img src="../../assets/img/shop1.jpg"></dt>
                         <dd>

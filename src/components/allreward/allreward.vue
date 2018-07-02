@@ -25,7 +25,7 @@
                                     </p>
                                 </li>
                             </ul>
-                            <p><router-link class="buy" :disabled="item.remaining == 0 ? true:false"   tag="button" :to="{name: 'goodsDetail', params: { id: item.id}}">我要购买</router-link></p>
+                            <p><router-link class="buy" :disabled="item.remaining == 0 ? true:false"   tag="button" :to="{name: 'goodsDetail', params: { id: item.id}}">我要夺宝</router-link></p>
                         </dd>
                     </dl>
                 </a>
