@@ -239,7 +239,6 @@ export default {
 }
 .yzm .on {
   color: #fff;
-  padding: 8px 15px;
   font-size: 14px;
   border-radius:2px;
   background-color:#ff6868;

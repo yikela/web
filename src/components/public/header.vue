@@ -8,7 +8,7 @@
                 <li><router-link to="/reward" active-class="u-link--Active" exact>开奖记录</router-link></li>
                 <li><router-link to="/invite" active-class="u-link--Active" exact>邀请有奖</router-link></li>
                 <li><router-link to="/newguide" active-class="u-link--Active" exact>新手指南</router-link></li>
-                <li>
+                <li v-if="!userLoginToken">
                     <div class="login_btn">
                         <router-link to="/login">登录</router-link>
                     </div>
@@ -16,18 +16,50 @@
                         <router-link to="/register">注册</router-link>
                     </div>
                 </li>
+                <li v-if="userLoginToken">
+                    <router-link to="/my">个人中心</router-link>
+                    <span   style="font-size:14px;" @click="logOut()">退出</span>
+                </li>
             </ul>
         </div>
     </div>
 </template>
 
 <script>
+import {
+    mapState,
+    mapGetters,
+    mapMutations,
+    mapActions
+  } from 'vuex'
 export default {
   name: 'vheader',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  components:{
+  },
+  computed:{
+    ...mapGetters(['userLoginToken']),
+  },
+  methods:{
+    ...mapMutations(['USER_SIGNIN','USER_SIGNOUT']),
+    ...mapActions(['userLogout', 'userLogin']),
+    logOut(){
+      this.userLogout().then(res => {
+        if(res.data.code == 200){
+          this.USER_SIGNOUT();
+          this.$router.push('/')
+        }
+      })
+    }
+  },
+  created(){
+
+  },
+  mounted(){
   }
 }
 </script>
@@ -36,8 +68,11 @@ export default {
 <style scoped>
   .vheader{
     width:100%;
-    height:100%;
+    height:80px;
     background-color: #fff;
+    position: fixed;
+    top:0;
+    left:0;
   }
   .header{
       width:1200px;

@@ -74,6 +74,10 @@ const restApi = (() => {
         assetList:{
           url:'/1/asset/list'
         },
+        //获取单个币的自唱
+        getCoinNUm:{
+          url:'/1/asset/detail'
+        },
         //获取夺宝币
         getMyCoin:{
           url:'/1/user/balance'
@@ -85,6 +89,42 @@ const restApi = (() => {
         //兑换游戏币
         exchangeGameCoin:{
             url:"/1/asset/to-game-token"
+        },
+        //新增问题
+        addIssue:{
+          url:'/1/issue/add'
+        },
+        //编辑issue
+        editIssue:{
+          url:"/1/issue/edit"
+        },
+        //获取问题列表
+        getIssueList:{
+          url:'/1/issue/list'
+        },
+        //获取问题详情
+        getIssueInfo:{
+          url:"/1/issue/detail"
+        },
+        //
+        getCommitList:{
+          url:"/1/issue/comment-list"
+        },
+        //是否设置资金密码
+        isSetCashPwd:{
+          url:'/1/payment-password/is-set'
+        },
+        //设置资金密码
+        setCashPwd:{
+          url:'/1/payment-password/new'
+        },
+        //提币
+        merchantCash:{
+          url:'/1/merchant/cash'
+        },
+        //提币记录
+        merchantCashHistory:{
+          url:'1/merchant/cash-history'
         },
         get(api_url, urlParams, success){
             return ajax.get(makeApiUrl(api_url, urlParams))

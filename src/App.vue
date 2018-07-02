@@ -219,4 +219,21 @@ export default {
       font-size: 12px;
       color:    #909;
     }
+
+    #content{
+      width: 100%;
+      max-width: 1200px;
+      padding-top:80px;
+      margin:auto
+    }
+
+
+    table tr th,tbody tr th{
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        background: #f5f5f5;
+        color: #666;
+        font-weight: 400
+    }
 </style>
