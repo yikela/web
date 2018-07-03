@@ -72,7 +72,7 @@ export default {
 <style scoped>
 .questionList{
   padding-top:20px;
-  width:80%;
+  width:60%;
   margin:auto;
 }
 .questionList a.back{

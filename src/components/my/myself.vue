@@ -33,11 +33,11 @@ export default {
       },
       myCash:{
         parentItem: "我的资金",
-        childItems: [{name:'账户余额',to:'/my/cash/balance'}, {name:'账户明细',to:'/my/cash/detail'}]
+        childItems: [{name:'账户余额',to:'/my/cash/balance'}, {name:'账户明细',to:'/my/cash/detail'},{name:'资金密码',to:"/my/cash/password"}]
       },
       myInvite:{
         parentItem: "我的邀请",
-        childItems: [{name:'我的邀请111',to:'/my/order/list'}, {name:'我的邀请222',to:'/my/order/win'}]
+        childItems: [{name:'邀请收益',to:'/my/invite'}]
       },
       myQuestion:{
         parentItem: "我的问题",

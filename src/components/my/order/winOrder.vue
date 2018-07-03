@@ -1,5 +1,7 @@
 <template>
   <div class="winOrder">
+    <p class="tip">温馨提示：到账部分平台已收取10%的平台使用费</p>
+    <h4>订单列表</h4>
       <table v-if="loading" style="background:#fff;">
         <thead style="background:red;">
           <tr>
@@ -19,7 +21,7 @@
             </tr>
         </tbody>
       </table>
-      <p class="tip">温馨提示：到账部分平台已收取10%的平台使用费</p>
+      
   </div>
 </template>
 
@@ -82,7 +84,15 @@ table{
 }
 .tip{
   color:red;
-  margin-top:20px;
+  margin:20px 0;
   font-size:14px;
+}
+.winOrder h4{
+  height:80px;
+  line-height: 80px;
+  text-align: center;
+  font-weight: bold;
+  font-size:18px;
+  color:#000;
 }
 </style>

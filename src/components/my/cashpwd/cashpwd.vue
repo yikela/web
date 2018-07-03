@@ -1,5 +1,19 @@
 <template>
   <div class="cashpwd">
+    <p>
+      <label>是否设置资金密码：</label><span>{{isSet}}</span>
+    </p>
+    <p>
+        <label>手机号码：</label><input type="text" placeholder = "请输入手机号码" v-model="phone"/>
+    </p>
+    <p>
+        <label>验证码：</label><input  placeholder = "请输入验证码" v-model="captcha"/>
+        <span class="on daoji" v-if="sendMsgDisabled"  >{{time+'s后获取'}}</span>
+        <span class="on send" @click="sendCode()" v-if="!sendMsgDisabled" >获取验证码</span>
+    </p>
+    <p><label>资金密码：</label><input  type="password" placeholder="资金密码" v-model="password" ></p>
+    <span @click="withdraw()" type="primary"  class="sub">设置</span>
+    
     
   </div>
 </template>
@@ -51,7 +65,7 @@ export default {
       }
       API.post(API.setCashPwd.url,{},form).then(res => {
         if(res.data.code == 200){
-            this.$vux.toast.text('设置成功', 'top');
+            this.$toast('设置成功');
         }
       })
     },
@@ -60,7 +74,7 @@ export default {
         //针对大陆号码做判断
         
         if (!regPhone.test(this.phone)) {
-            this.$vux.toast.text('手机号码格式不正确', 'top');
+            this.$toast('手机号码格式不正确');
             return false
         }else{
           API.post(API.sendCode.url,{},{"tel":this.phone}).then(res => {
@@ -95,7 +109,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.recharge{
+.cashpwd{
   width:60%;
   margin:auto;
 }
@@ -112,5 +126,29 @@ h4{
 }
 table{
   margin:auto
+}
+
+.cashpwd p{
+height:40px;
+margin:10px 0 10px 25px;
+}
+.cashpwd input{
+  height:40px;
+  font-size:14px;
+  border:1px solid #666;
+  text-indent: 15px;
+}
+.sub{
+  display: block;
+  margin-top:20px;
+  width:150px;
+  height:40px;
+  line-height: 40px;
+  text-align: center;
+  font-size:16px;
+  color:#fff;
+  background:brown;
+  border-radius:5px;
+   margin-left:30px;
 }
 </style>

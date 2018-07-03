@@ -6,7 +6,20 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+import {Alert, Confirm, Toast} from 'wc-messagebox'
+import 'wc-messagebox/style.css'
 
+let options = {
+  durtaion: 3000,
+  location: 'top'
+}
+
+Vue.use(Alert, options)
+Vue.use(Confirm, options)
+Vue.use(Toast, options)
+
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
 
 
 

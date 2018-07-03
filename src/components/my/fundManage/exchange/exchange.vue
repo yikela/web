@@ -99,9 +99,9 @@ export default {
 
       API.post(API.exchangeGameCoin.url,{},form).then(res => {
         if(res.data.code == 200){
-            this.$vux.toast.text('兑换成功', 'top');
+            this.$toast('兑换成功');
         }else{
-          this.$vux.toast.text(res.data.msg.zh, 'top');
+          this.$toast(res.data.msg);
         }
       })
     }

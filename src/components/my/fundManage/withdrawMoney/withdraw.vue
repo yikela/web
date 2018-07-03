@@ -8,6 +8,14 @@
       <label>提币数量：</label><input  type="text" placeholder="最低提现单位0.01" v-model="number" >
       <span style="font-size:14px;color:red;text-align:center">可提余额：{{amount}}{{type}}  提现手续费10%</span>
     </p>
+     <p>
+        <label>手机号码：</label><input type="text" placeholder = "请输入手机号码" v-model="phone"/>
+    </p>
+    <p>
+        <label>验证码：</label><input  placeholder = "请输入验证码" v-model="captcha"/>
+        <span class="on daoji" v-if="sendMsgDisabled"  >{{time+'s后获取'}}</span>
+        <span class="on send" @click="sendCode()" v-if="!sendMsgDisabled" >获取验证码</span>
+    </p>
     <p><label>资金密码：</label><input  type="password" placeholder="资金密码" v-model="password" ></p>
     <span @click="withdraw()" type="primary"  class="sub">兑换</span>
   </div>
@@ -25,10 +33,9 @@ export default {
   name: 'withdraw',
   data () {
     return {
-      showPopup:false,
       type:null,
       address:'',
-      messageCode:'',
+      captcha:'',
       number:'',
       typeId:null,
       amount:null,
@@ -59,10 +66,12 @@ export default {
         coin_type: this.typeId,
         address: this.address,
         number: this.number,
+        captcha:this.captcha,
+        pay_password:this.password
       }
       API.post(API.merchantCash.url,{},form).then(res => {
         if(res.data.code == 200){
-
+          this.$toast('提币成功');
         }
       })
     },
@@ -78,7 +87,7 @@ export default {
         //针对大陆号码做判断
         
         if (!regPhone.test(this.phone)) {
-            this.$vux.toast.text('手机号码格式不正确', 'top');
+            this.$toast('手机号码格式不正确');
             return false
         }else{
           API.post(API.sendCode.url,{},{"tel":this.phone}).then(res => {
@@ -151,5 +160,11 @@ margin:10px 0 10px 25px;
   background:brown;
   border-radius:5px;
    margin-left:30px;
+}
+.send{
+  color:#000
+}
+.daoji{
+  color:#666
 }
 </style>

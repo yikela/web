@@ -71,9 +71,34 @@ export default new Router({
         {
           path: '/my/question/:id',
           component: resolve => require(['@/components/my/question/questionDetail'], resolve)
+        },
+        {
+          path: "/my/cash/outside/recharge",
+          name: "rechargeOutside",
+          component: resolve => require(['@/components/my/fundManage/recharge/rechargeOutside'], resolve),
+          meta:{keepAlive:false},
+        },
+        {
+          path: "/my/cash/password",
+          name: "cashPassword",
+          component: resolve => require(['@/components/my/cashpwd/cashpwd'], resolve),
+          meta:{keepAlive:false},
+        },
+        {
+          path: "/my/cash/outside/transfer",
+          name: "transferOutside",
+          component: resolve => require(['@/components/my/fundManage/recharge/transfer'], resolve),
+          meta:{keepAlive:false},
+        },
+        {
+          path: "/my/invite",
+          name: "invite",
+          component: resolve => require(['@/components/my/invite/invite'], resolve),
+          meta:{keepAlive:false},
         },  
       ],
     },
+    
     {
       path: '/reward',
       name: 'reward',

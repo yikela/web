@@ -64,6 +64,7 @@ export default {
   line-height: 40px;
   list-style: none;
   cursor: pointer;
+  color: #666
  }
  
  #tabPanel .item .sildermun ul li:hover {

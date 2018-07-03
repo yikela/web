@@ -23,8 +23,8 @@
            <tr>
             <th>夺宝币</th>
             <th>{{coins}}</th>
-            <th>场外充值</th>
-            <th></th>
+            <router-link to="/my/cash/outside/recharge" tag="th" style="color:blue" exact>场外充值</router-link>
+            <router-link to="/my/cash/outside/transfer" tag="th" style="color:blue" exact>场外转账</router-link>
             <th></th>
           </tr>
         </tbody>

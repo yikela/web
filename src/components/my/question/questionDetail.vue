@@ -6,7 +6,7 @@
       <p class="p"><span>问题类型：</span>{{types[item.type_id]}}</p>
       <p class="p"><span>问题状态：</span>{{item.state == 1 ? '进行中':'解决'}}</p>
       <div class="myself"><span>{{item.created_at * 1000 }}  你：</span><p class="box">{{item.body}}</p></div>
-      <div class="kefu" v-for="(i,index) in comItems" :key="index"><span>客服</span><p class="box">{{i.body}}<br>{{i.created_at * 1000 }}</p></div>
+      <div class="kefu" v-for="(i,index) in comItems" :key="index"><span>客服{{i.created_at * 1000 }}</span><p class="box">{{i.body}}</p></div>
 </div>
   </div>
 </template>
@@ -115,7 +115,7 @@ export default {
 }
 .kefu p{
  float: right;
- border:1px solid #dfdfdf;
+ /* border:1px solid #dfdfdf; */
  height:30px;
   line-height: 30px;
     text-indent: 5px;

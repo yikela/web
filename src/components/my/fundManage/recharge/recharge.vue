@@ -5,12 +5,18 @@
       <p class="tip">需要1个网络确认才能到账，任何非BTC资产充值到BTC地址后不可找回！</p>
 
       <p>充值地址</p>
-      <!-- <div style="text-align:center;margin-top:15px;">
-        <qrcode :value="ad" type="img"></qrcode>
-      </div> -->
+       <div style="text-align:center;margin-top:15px;">
+        <div id="qrcode">
+          <canvas id="canvas"></canvas>
+        </div>
+      </div> 
       <div style="width:100%;margin:20px 0;text-align:center">{{ad}}</div>
       <div style="display:flex;justify-content:center;align-items:center">
-        <button class="btnCopy">复制多重签名</button>
+        <button type="button"
+      v-clipboard:copy="ad"
+      v-clipboard:success="onCopy"
+      v-clipboard:error="onError" class="btnCopy">复制多重签名</button>
+  </div>
       </div>
   </div>
 </template>
@@ -23,6 +29,9 @@ import {
     mapActions
   } from 'vuex'
 import coinType from '../../../../utils/coin_type'
+import Vue from 'vue'
+import QRCode from 'qrcode'
+Vue.use(QRCode)
 export default {
   name: 'recharge',
   data () {
@@ -35,6 +44,7 @@ export default {
     }
   },
   components:{
+    QRCode
   },
   computed:{
     ...mapGetters(['userLoginToken']),
@@ -51,9 +61,27 @@ export default {
     getAddress(value){
       API.get(API.getRechargeAd.url,{session:this.userLoginToken,type:value},{}).then(res => {
         if(res.data.code == 200){
-          this.ad = res.data.data
+          this.ad = res.data.data;
+          this.useqrcode(res.data.data)
         }
       })
+    },
+    useqrcode(con){
+      var canvas = document.getElementById('canvas')
+
+      QRCode.toCanvas(canvas, con, function (error) {
+        if (error) console.error(error)
+        console.log('success!');
+      })
+    },
+    onCopy: function (e) {
+      this.$toast('复制成功',{
+    position: 'top',// 'bottom' | 'center',
+    duration: '1500'
+})
+    },
+    onError: function (e) {
+      alert('Failed to copy texts')
     }
   },
   created(){

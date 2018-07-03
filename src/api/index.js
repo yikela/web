@@ -102,6 +102,10 @@ const restApi = (() => {
         getIssueList:{
           url:'/1/issue/list'
         },
+        //获取图片列表
+        getIssuePic:{
+          url:'/1/issue/image-list'
+        },
         //获取问题详情
         getIssueInfo:{
           url:"/1/issue/detail"
@@ -124,7 +128,23 @@ const restApi = (() => {
         },
         //提币记录
         merchantCashHistory:{
-          url:'1/merchant/cash-history'
+          url:'/1/merchant/cash-history'
+        },
+        //获取场外充值地址
+        getOtcAddress:{
+          url:'/1/otc/address'
+        },
+        //场外转账
+        getOtcTransfer:{
+          url:'/1/otc/transfer'
+        },
+        //获取用户推荐奖励
+        getRefDetail:{
+          url:'/1/ref/detail'
+        },
+        //兑换推荐奖励
+        exchangeRefCash:{
+          url:"/1/ref/cash"
         },
         get(api_url, urlParams, success){
             return ajax.get(makeApiUrl(api_url, urlParams))

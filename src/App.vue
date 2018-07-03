@@ -20,6 +20,9 @@ export default {
   components:{
     pubHeader,
     pubFooter
+  },
+  mounted(){
+    this.$toast(111)
   }
 }
 </script>
@@ -233,7 +236,21 @@ export default {
         line-height: 32px;
         text-align: center;
         background: #f5f5f5;
-        color: #666;
         font-weight: 400
     }
+
+    table thead tr th {
+      border-width: 0 0 2px;
+      color: #7a7a7a;
+      font-weight: 500
+    }
+    th{
+      border: 1px solid #dbdbdb;
+      border-left:none;
+      border-right: none;
+    }
+    tbody tr th{
+      color:#333
+    }
+    
 </style>
