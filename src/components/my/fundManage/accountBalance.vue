@@ -62,13 +62,21 @@ export default {
     ...mapGetters(['userLoginToken']),
   },
   methods:{
-    ...mapMutations(['USER_SIGNIN']),
+    ...mapMutations(['USER_SIGNIN','USER_SIGNOUT']),
     ...mapActions(['userLogout', 'userLogin']),
     getList(){
       API.get(API.assetList.url+`?session=${this.userLoginToken}`,{},{}).then(res => {
         if(res.data.code == 200){
           this.items = res.data.data;
           this.loading = true
+        }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
+        }else{
+          this.$toast(res.data.msg);
         }
       })
     },
@@ -76,6 +84,14 @@ export default {
       API.get(API.getMyCoin.url+`?session=${this.userLoginToken}`,{},{}).then(res => {
         if(res.data.code == 200){
           this.coins = res.data.data
+        }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
+        }else{
+          this.$toast(res.data.msg);
         }
       })
     }

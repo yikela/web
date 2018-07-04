@@ -1,6 +1,6 @@
 <template>
   <div class="rechargeOutside" v-if="address">
-    <a href="javascript:history.back(-1)">返回</a>
+    <!-- <a href="javascript:history.back(-1)">返回</a> -->
     <p class="address">您的场外充值地址为：{{address}}</p>
     <div >
       <button type="button" v-clipboard:copy="address" v-clipboard:success="onCopy" v-clipboard:error="onError" class="btnCopy">复制多重签名</button>

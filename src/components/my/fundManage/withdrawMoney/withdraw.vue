@@ -52,7 +52,7 @@ export default {
     ...mapGetters(['userLoginToken']),
   },
   methods:{
-    ...mapMutations(['USER_SIGNIN']),
+    ...mapMutations(['USER_SIGNIN','USER_SIGNOUT']),
     ...mapActions(['userLogout', 'userLogin']),
     onItemClick(value){
       if (!this.disabled) {
@@ -72,6 +72,14 @@ export default {
       API.post(API.merchantCash.url,{},form).then(res => {
         if(res.data.code == 200){
           this.$toast('提币成功');
+        }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
+        }else{
+          this.$toast(res.data.msg);
         }
       })
     },
@@ -79,6 +87,14 @@ export default {
       API.get(API.getCoinNUm.url+`?session=${this.userLoginToken}&coin_type=${this.$route.params.id}`,{},{}).then(res => {
         if(res.data.code == 200){
           this.amount = Number(res.data.data).toFixed(8);
+        }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
+        }else{
+          this.$toast(res.data.msg);
         }
       })
     },

@@ -8,21 +8,22 @@
                     </div>
                     <div class="login_table">
                         <div class="login_item">
-                            <input placeholder = "请输入您的账号"/>
+                            <input placeholder = "请输入您的账号" v-model="phone"/>
                         </div>
                         <div class="yzm">
-                            <input placeholder = "请输入验证码"/>
-                            <span class="on"><a href="#">获取验证码</a></span>
+                            <input  placeholder = "请输入验证码" v-model="messagecode"/>
+                            <span class="on" v-if="sendMsgDisabled"  >{{time+'s后获取'}}</span>
+                            <span class="on send" @click="sendCode()" v-if="!sendMsgDisabled" >获取验证码</span>
                         </div>
                         <div class="login_item">
-                            <input type="password" placeholder = "请输入新密码"/>
+                            <input type="password" placeholder = "请输入新密码" v-model="password"/>
                         </div>
                         <div class="login_item">
-                            <input type="password" placeholder = "再次确认密码"/>
+                            <input type="password" placeholder = "再次确认密码" v-model="secPassword"/>
                         </div>
-                        <div class="login_error fl"><i></i>您输入的手机号有误！</div>
+                        <div class="login_error fl" v-if="showError"><i></i>{{errorMsg}}</div>
                         <div class="login_btn">
-                            <button>登录</button>
+                            <button>提交</button>
                         </div>
                     </div>
                 </div>
@@ -35,10 +36,105 @@
         name: 'findPass',
         data () {
             return {
-                msg: 'Welcome to Your Vue.js App'
+                showError:false,
+                errorMsg:'',
+                phone:null,
+                password:null,
+                messagecode:null,
+                secPassword:null,
+                time: 60, // 发送验证码倒计时
+                sendMsgDisabled: false,
             }
         },
-    }
+        methods:{
+              clickRegister(){
+              var regPhone = /^1(3|4|5|7|8)\d{9}$/;
+              var regEmail = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
+              if(!this.phone || !this.messagecode || !this.password || !this.secPassword ){
+                this.showError = true;
+                this.errorMsg='请填写相关信息';
+                setTimeout(()=>{
+                  this.showError = false;
+                  this.errorMsg='';
+                },3000)
+                return false
+              }
+              if (!regPhone.test(this.phone)) {
+                    this.showError = true;
+                    this.errorMsg='手机号码格式不正确';
+                    setTimeout(()=>{
+                      this.showError = false;
+                      this.errorMsg='';
+                    },3000)
+                    return false
+              }
+
+              if(this.password !== this.secPassword){
+                this.showError = true;
+                this.errorMsg='两次密码不一致';
+                setTimeout(()=>{
+                  this.showError = false;
+                  this.errorMsg='';
+                },3000)
+                return false
+              }
+              
+                const params = {
+                  "password": this.password,
+                  "password2": this.secPassword,
+                  "tel": this.phone,
+                  "captcha": this.messagecode,
+                };
+                API.post(API.findpwd.url,{},params).then(res => {
+                  if(res.data.code == 200){
+                    this.$router.push('/login')
+                  }else{
+                    this.showError = true;
+                    this.errorMsg=res.data.msg;
+                    setTimeout(()=>{
+                      this.showError = false;
+                      this.errorMsg='';
+                    },3000)
+                    return false
+                  }
+                })
+            },
+            sendCode(){
+              var regPhone = /^1(3|4|5|7|8)\d{9}$/;
+                //针对大陆号码做判断
+                
+                if (!regPhone.test(this.phone)) {
+                    this.showError = true;
+                    this.errorMsg='手机号码格式不正确';
+                    setTimeout(()=>{
+                      this.showError = false;
+                      this.errorMsg='';
+                    },3000)
+                    return false
+                }else{
+                  API.post(API.sendCode.url,{},{"tel":this.phone}).then(res => {
+                    if(res.data.code == 200){
+                      this.send()
+                    }
+                  })
+                  
+                }
+                
+            },
+            send() {
+              let self = this;
+              self.sendMsgDisabled = true;
+              let interval = window.setInterval(function() {
+              if ((self.time--) <= 0) {
+                self.time = 60;
+                self.sendMsgDisabled = false;
+                window.clearInterval(interval);
+              }
+              }, 1000);
+            }
+          }
+        }
+    
 </script>
 <style scoped>
 .main{
@@ -128,9 +224,8 @@
   box-sizing:border-box;
   font-size: 14px;
 }
-.yzm .on a {
+.yzm .on.send{
   color: #fff;
-  padding: 8px 15px;
   font-size: 14px;
   border-radius:2px;
   background-color:#ff6868;

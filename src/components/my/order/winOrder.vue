@@ -55,11 +55,13 @@ export default {
           this.items =  res.data.data;
           this.loading = true
         }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
           this.USER_SIGNOUT();
           setTimeout(()=>{
             this.$router.push('/login');
-          },1000)
+          },2000)
         }else{
+          this.$toast(res.data.msg);
         }
       })
     },

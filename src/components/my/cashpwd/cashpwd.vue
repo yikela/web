@@ -1,7 +1,7 @@
 <template>
   <div class="cashpwd">
     <p>
-      <label>是否设置资金密码：</label><span>{{isSet}}</span>
+      是否设置资金密码：<span>{{isSet}}</span>
     </p>
     <p>
         <label>手机号码：</label><input type="text" placeholder = "请输入手机号码" v-model="phone"/>
@@ -45,14 +45,22 @@ export default {
     ...mapGetters(['userLoginToken']),
   },
   methods:{
-    ...mapMutations(['USER_SIGNIN']),
+    ...mapMutations(['USER_SIGNIN','USER_SIGNOUT']),
     ...mapActions(['userLogout', 'userLogin']),
     isSetCashPwd(){
       API.get(API.isSetCashPwd.url+`?session=${this.userLoginToken}`,{},{}).then(res => {
         if(res.data.code == 200){
           this.isSet = '是'
+        }else if(res.data.code == 401){
+          this.isSet = '否'
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
         }else{
           this.isSet = '否'
+          // this.$toast(res.data.msg);
         }
 
       })
@@ -66,6 +74,18 @@ export default {
       API.post(API.setCashPwd.url,{},form).then(res => {
         if(res.data.code == 200){
             this.$toast('设置成功');
+            this.isSetCashPwd();
+            this.captcha = '';
+            this.password = '';
+            this.phone = '';
+        }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
+        }else{
+          this.$toast(res.data.msg);
         }
       })
     },
@@ -150,5 +170,9 @@ margin:10px 0 10px 25px;
   background:brown;
   border-radius:5px;
    margin-left:30px;
+}
+label{
+  width:100px;
+  display: inline-block;
 }
 </style>

@@ -22,7 +22,6 @@ export default {
     pubFooter
   },
   mounted(){
-    this.$toast(111)
   }
 }
 </script>

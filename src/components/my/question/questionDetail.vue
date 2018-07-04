@@ -39,13 +39,22 @@ export default {
     ...mapGetters(['userLoginToken']),
   },
   methods:{
-    ...mapMutations(['USER_SIGNIN']),
+    ...mapMutations(['USER_SIGNIN','USER_SIGNOUT']),
     ...mapActions(['userLogout', 'userLogin']),
     getIssueDetail(){
       API.get(API.getIssueInfo.url+`?issue_id=${this.$route.params.id}&session=${this.userLoginToken}`,{},{}).then(res => {
         if(res.data.code == 200){
           this.item = res.data.data;
           this.loading = true
+        }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
+        }else{
+          this.loading == true
+          this.$toast(res.data.msg);
         }
       })
     },
@@ -53,6 +62,14 @@ export default {
       API.get(API.getCommitList.url+ `?issue_id=${this.$route.params.id}&session=${this.userLoginToken}`,{},{}).then(res => {
         if(res.data.code == 200){
           this.comItems = res.data.data
+        }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
+        }else{
+          this.$toast(res.data.msg);
         }
       })
     }

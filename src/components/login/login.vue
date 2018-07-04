@@ -13,7 +13,7 @@
                     <div class="login_item">
                         <input type="password" v-model="password" placeholder = "请输入您的密码"/>
                     </div>
-                    <div class="login_error fl"><i></i>您输入的手机号有误！</div>
+                    <div class="login_error fl" v-if="showError"><i></i>{{errorMsg}}</div>
                     <div class="login_btn">
                         <button  @click="clickLogin()">登录</button>
                     </div>
@@ -40,7 +40,8 @@ export default {
   name: 'login',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
+      showError:false,
+      errorMsg:'',
       username:null,
       password:null,
     }
@@ -54,6 +55,26 @@ export default {
     ...mapMutations(['USER_SIGNIN']),
     ...mapActions(['userLogout', 'userLogin']),
     clickLogin(){
+       var regPhone = /^1(3|4|5|7|8)\d{9}$/;
+        if (!this.username || !this.password) {
+            this.showError = true;
+            this.errorMsg='请填写相关信息';
+            setTimeout(()=>{
+              this.showError = false;
+              this.errorMsg='';
+            },3000)
+            return false
+        }
+
+        if (!regPhone.test(this.username)) {
+            this.showError = true;
+            this.errorMsg='输入的手机号码错误';
+            setTimeout(()=>{
+              this.showError = false;
+              this.errorMsg='';
+            },3000)
+            return false
+        }
         const params = {
             username:this.username,
             password:this.password
@@ -62,15 +83,18 @@ export default {
             if(res.data.code == 200){
               this.USER_SIGNIN(res.data.session);
               this.$router.push('/');
-              console.log(this.$router)
             }else{
-              this.$vux.toast.text(res.data.msg.zh, 'top');
+              this.showError = true;
+              this.errorMsg=res.data.msg;
+              setTimeout(()=>{
+                this.showError = false;
+                this.errorMsg='';
+              },3000)
             }
         })
     }
   },
   mounted(){
-      console.log(1111)
   }
 }
 </script>

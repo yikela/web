@@ -17,7 +17,6 @@
       v-clipboard:success="onCopy"
       v-clipboard:error="onError" class="btnCopy">复制多重签名</button>
   </div>
-      </div>
   </div>
 </template>
 
@@ -50,7 +49,7 @@ export default {
     ...mapGetters(['userLoginToken']),
   },
   methods:{
-    ...mapMutations(['USER_SIGNIN']),
+    ...mapMutations(['USER_SIGNIN','USER_SIGNOUT']),
     ...mapActions(['userLogout', 'userLogin']),
     onItemClick(value){
       if (!this.disabled) {
@@ -63,6 +62,14 @@ export default {
         if(res.data.code == 200){
           this.ad = res.data.data;
           this.useqrcode(res.data.data)
+        }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
+        }else{
+          this.$toast(res.data.msg);
         }
       })
     },

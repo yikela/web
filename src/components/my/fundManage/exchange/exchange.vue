@@ -26,7 +26,7 @@
 
      
      <div class="detail" v-if="loading">
-      <p><span>需要兑换的虚拟币：</span><input title="需要兑换的虚拟币" min="1" :max="amount" v-model="number"  class="fontSize" type="number"></p>
+      <p><span>需要兑换的虚拟币({{coins[type]}})：</span><input title="需要兑换的虚拟币" min="1" :max="amount" v-model="number"  class="fontSize" type="number"></p>
       <p class="platForm">折算成平台币：  {{realTotal}}</p>
       <span @click="exchange()"  class="sub"> 提交</span>
     </div>
@@ -68,7 +68,7 @@ export default {
    
   },
   methods:{
-    ...mapMutations(['USER_SIGNIN']),
+    ...mapMutations(['USER_SIGNIN','USER_SIGNOUT']),
     ...mapActions(['userLogout', 'userLogin']),
     getExchangeRate(item){
       API.get(API.getExchangeRate.url+`?coin_type=${this.type}`,{},{}).then(res => {
@@ -77,6 +77,14 @@ export default {
           this.rate = res.data.data;
           this.getCoin();
           
+        }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
+        }else{
+          this.$toast(res.data.msg);
         } 
       });
     },
@@ -86,6 +94,14 @@ export default {
           this.amount = Number(res.data.data).toFixed(8);
           this.total = Number(this.rate)*this.amount;
           this.loading = true
+        }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
+        }else{
+          this.$toast(res.data.msg);
         }
       })
     },
@@ -100,6 +116,12 @@ export default {
       API.post(API.exchangeGameCoin.url,{},form).then(res => {
         if(res.data.code == 200){
             this.$toast('兑换成功');
+        }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
         }else{
           this.$toast(res.data.msg);
         }

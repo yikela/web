@@ -33,7 +33,7 @@ export default {
       },
       myCash:{
         parentItem: "我的资金",
-        childItems: [{name:'账户余额',to:'/my/cash/balance'}, {name:'账户明细',to:'/my/cash/detail'},{name:'资金密码',to:"/my/cash/password"}]
+        childItems: [{name:'账户余额',to:'/my/cash/balance'},{name:'资金密码',to:"/my/cash/password"}]
       },
       myInvite:{
         parentItem: "我的邀请",
@@ -52,7 +52,7 @@ export default {
     ...mapGetters(['userLoginToken']),
   },
   methods:{
-    ...mapMutations(['USER_SIGNIN']),
+    ...mapMutations(['USER_SIGNIN','USER_SIGNOUT']),
     ...mapActions(['userLogout', 'userLogin']),
   },
   created(){

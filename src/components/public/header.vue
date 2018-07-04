@@ -17,8 +17,8 @@
                     </div>
                 </li>
                 <li v-if="userLoginToken">
-                    <router-link to="/my">个人中心</router-link>
-                    <span   style="font-size:14px;" @click="logOut()">退出</span>
+                    <router-link to="/my" class="myself">个人中心</router-link>
+                    <span   style="font-size:14px;cursor:pointer" @click="logOut()">退出</span>
                 </li>
             </ul>
         </div>
@@ -136,5 +136,17 @@ export default {
 
    ul li a.u-link--Active{
     color:#dc3838
+  }
+  a.myself{
+    border: 1px solid #dc3838;
+    color: #fff !important;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+    background-color: #dc3838;
+    text-align: center;
+    border-radius: 4px;
+    margin: 0;
   }
 </style>

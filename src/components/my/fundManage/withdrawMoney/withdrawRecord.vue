@@ -16,7 +16,7 @@
           <tr v-for="(i,index) in items" :key="index">
             <th>{{i.created_at}}</th>
             <th>{{i.amount}}{{coinType[i.coin_type]}}</th>
-            <th>{{111111}}</th>
+            <th>{{i.to_address}}</th>
             <th>{{i.state}}</th>
           </tr>
         </tbody>
@@ -49,12 +49,20 @@ export default {
     ...mapGetters(['userLoginToken']),
   },
   methods:{
-    ...mapMutations(['USER_SIGNIN']),
+    ...mapMutations(['USER_SIGNIN','USER_SIGNOUT']),
     ...mapActions(['userLogout', 'userLogin']),
     getList(){
       API.get(API.merchantCashHistory.url+`?session=${this.userLoginToken}&coin_type=${this.typeId}`,{},{}).then(res => {
         if(res.data.code == 200){
           this.items = res.data.data
+        }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
+        }else{
+          this.$toast(res.data.msg);
         } 
       })
     }

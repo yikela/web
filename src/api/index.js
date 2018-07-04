@@ -146,6 +146,10 @@ const restApi = (() => {
         exchangeRefCash:{
           url:"/1/ref/cash"
         },
+        //删除issue图片
+        delIssueImage:{
+          url:'/1/issue/remove-image'
+        },
         get(api_url, urlParams, success){
             return ajax.get(makeApiUrl(api_url, urlParams))
         },

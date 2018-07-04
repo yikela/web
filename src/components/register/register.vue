@@ -30,7 +30,7 @@
                         <div class="login_item">
                             <input type="text" placeholder = "请输邀请码" v-model="ref"/>
                         </div>
-                        <div class="login_error fl"><i></i>您输入的手机号有误！</div>
+                        <div class="login_error fl" v-if="showError"><i></i>{{errorMsg}}</div>
                         <div class="login_btn" @click="clickRegister()">
                             <button >注册</button>
                         </div>
@@ -64,6 +64,8 @@ export default {
             sendMsgDisabled: false,
             birth:'2000-11-11',
             ref:'',
+            showError:false,
+            errorMsg:'',
 
         }
     },
@@ -78,21 +80,41 @@ export default {
       var regPhone = /^1(3|4|5|7|8)\d{9}$/;
       var regEmail = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
       if(!this.phone || !this.messagecode || !this.password || !this.secPassword || !this.email){
-        alert('请填写相关信息');
+        this.showError = true;
+        this.errorMsg='请填写相关信息';
+        setTimeout(()=>{
+          this.showError = false;
+          this.errorMsg='';
+        },3000)
         return false
       }
       if (!regPhone.test(this.phone)) {
-        alert('手机号码格式不正确');
-          return false
+        this.showError = true;
+        this.errorMsg='手机号码格式不正确';
+        setTimeout(()=>{
+          this.showError = false;
+          this.errorMsg='';
+        },3000)
+        return false
       }
       if (!regEmail.test(this.email)) {
-       alert('邮箱格式不正确');
-          return false
+        this.showError = true;
+        this.errorMsg='邮箱格式不正确';
+        setTimeout(()=>{
+          this.showError = false;
+          this.errorMsg='';
+        },3000)
+        return false
       }
 
       if(this.password !== this.secPassword){
-        alert('两次密码不一致');
-          return false
+        this.showError = true;
+        this.errorMsg='两次密码不一致';
+        setTimeout(()=>{
+          this.showError = false;
+          this.errorMsg='';
+        },3000)
+        return false
       }
       
         const params = {
@@ -108,7 +130,12 @@ export default {
           if(res.data.code == 200){
             this.$router.push('/login')
           }else{
-            alert(res.data.msg)
+           this.showError = true;
+              this.errorMsg=res.data.msg;
+              setTimeout(()=>{
+                this.showError = false;
+                this.errorMsg='';
+              },3000)
           }
         })
     },
@@ -117,7 +144,12 @@ export default {
         //针对大陆号码做判断
         
         if (!regPhone.test(this.phone)) {
-            alert('手机号码格式不正确');
+            this.showError = true;
+            this.errorMsg='手机号码格式不正确';
+            setTimeout(()=>{
+              this.showError = false;
+              this.errorMsg='';
+            },3000)
             return false
         }else{
           API.post(API.sendCode.url,{},{"tel":this.phone}).then(res => {
@@ -142,7 +174,6 @@ export default {
     }
   },
   mounted(){
-      console.log(1111)
   }
    
 }
