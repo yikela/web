@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="reward" v-if="loading">
-    <div class="reward_title"><b>最新揭晓</b>(到目前为止工揭晓商品<span>106</span>件)</div>
+    <div class="reward_title"><b>最新揭晓</b><span></span></div>
     <ul class="reward_content">
       <li v-for="(item,index) in items" :key="index">
         <dl>
@@ -19,7 +19,7 @@
           <dd>商品价值：<span>{{item.price}}</span></dd>
           <dd>揭晓时间：<span>{{item.updated_at}}</span></dd>
         </dl>
-        <p>幸运云购码：<span>{{item.calc_result}}</span><a href="#">查看详情</a></p>
+        <p>幸运云购码：<span>{{item.calc_result}}</span><router-link :to="'/windetail/'+item.id">查看详情</router-link></p>
       </li>
     </ul>
     <div class="more"  v-show="!noMore"><span @click="more()">加载更多</span></div>

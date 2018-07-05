@@ -29,7 +29,7 @@
                                     </p>
                                 </li>
                             </ul>
-                            <p><router-link class="buy" :disabled="item.remaining == 0 ? true:false"   tag="button" :to="{name: 'goodsDetail', params: { id: item.id}}">立即购买</router-link></p>
+                            <p><router-link class="buy" :disabled="item.remaining == 0 ? true:false"   tag="button" :to="{name: 'shopdetail', params: { id: item.id}}">立即购买</router-link></p>
                         </dd>
                     </dl>
                 </a>
@@ -97,6 +97,9 @@
 .soon_content>li:last-child{
     margin-right:0;
 }
+.soon_content>li a dl{
+   padding:0 10px;
+ }
 .soon_content>li a dl dt{
     padding:0 40px;
 }
@@ -176,10 +179,13 @@
     -o-transition: width 0.6s ease; 
     transition: width 0.6s ease; 
 } 
-.soon_people li p span{
+.soon_people>li p{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between
+}
+.soon_people>li p span{
     display:block;
-    width:67px;
-    float:left;
     font-size:12px;
     color:#333;
 }

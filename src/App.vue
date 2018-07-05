@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-cloak>
     <pub-header></pub-header>
     <div id="content">
       <router-view/>
@@ -252,4 +252,7 @@ export default {
       color:#333
     }
     
+    #content{
+     min-height:800px;
+    }
 </style>

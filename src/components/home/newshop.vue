@@ -29,7 +29,7 @@
                                     </p>
                                 </li>
                             </ul>
-                            <p><router-link class="buy" :disabled="item.remaining == 0 ? true:false"   tag="button" :to="{name: 'goodsDetail', params: { id: item.id}}">我要购买</router-link></p>
+                            <p><router-link class="buy" :disabled="item.remaining == 0 ? true:false"   tag="button" :to="{name: 'shopdetail', params: { id: item.id}}">我要购买</router-link></p>
                         </dd>
                     </dl>
                 </a>
@@ -92,6 +92,9 @@ export default {
 .newshop_content>li:nth-child(5n+5){
     margin-right:0;
 }
+.newshop_content>li a dl{
+   padding:0 10px;
+ }
 .newshop_content>li a dl dt{
     padding:0 40px;
 }
@@ -176,10 +179,13 @@ export default {
     -o-transition: width 0.6s ease; 
     transition: width 0.6s ease; 
 }
-.newshop_people li p span{
+.newshop_people>li p{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between
+}
+.newshop_people>li p span{
     display:block;
-    width:72px;
-    float:left;
     font-size:12px;
     color:#333;
 }

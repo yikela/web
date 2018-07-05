@@ -66,15 +66,15 @@ export default {
             return false
         }
 
-        if (!regPhone.test(this.username)) {
-            this.showError = true;
-            this.errorMsg='输入的手机号码错误';
-            setTimeout(()=>{
-              this.showError = false;
-              this.errorMsg='';
-            },3000)
-            return false
-        }
+        // if (!regPhone.test(this.username)) {
+        //     this.showError = true;
+        //     this.errorMsg='输入的手机号码错误';
+        //     setTimeout(()=>{
+        //       this.showError = false;
+        //       this.errorMsg='';
+        //     },3000)
+        //     return false
+        // }
         const params = {
             username:this.username,
             password:this.password

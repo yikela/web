@@ -105,6 +105,9 @@ export default {
 .newshop_content>li:nth-child(5n+5){
     margin-right:0;
 }
+ .newshop_content>li a dl{
+   padding:0 10px;
+ }
 .newshop_content>li a dl dt{
     padding:0 40px;
 }
@@ -137,7 +140,8 @@ export default {
 
 .more{
     width:100%;
-    height:40px;
+    line-height: 35px;
+    height:35px;
     text-align: center;
     clear: both;
     padding-top:20px;
@@ -145,9 +149,10 @@ export default {
 .more span{
     display: inline-block;
     width:100px;
-    height: 40px;
+    line-height: 35px;
+    height:35px;
     text-align: center;
-    line-height: 40px;
+    border-radius:3px;
     background:#0e90d2;
     color:#fff;
     cursor: pointer;
@@ -210,10 +215,13 @@ box-sizing: border-box;
 -o-transition: width 0.6s ease; 
 transition: width 0.6s ease; 
 }
+.newshop_people>li p{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between
+}
 .newshop_people>li p span{
     display:block;
-    width:72px;
-    float:left;
     font-size:12px;
     color:#333;
 }

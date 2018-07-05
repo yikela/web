@@ -136,7 +136,7 @@ export default new Router({
     },
     {
       path: '/novicedetail',
-      name: '/novicedetail',
+      name: 'novicedetail',
       component: resolve => require(['@/components/novicedetail/novicedetail'], resolve),
     },
     {
@@ -146,18 +146,18 @@ export default new Router({
     },
     {
       path: '/noticedetail',
-      name: '/noticedetail',
+      name: 'noticedetail',
       component: resolve => require(['@/components/noticedetail/noticedetail'], resolve),
     },
     {
-      path: '/shopdetail',
-      name: '/shopdetail',
-      component: resolve => require(['@/components/shopdetail/shopdetail'], resolve),
+      path: '/windetail/:id',
+      name: 'windetail',
+      component: resolve => require(['@/components/windetail/windetail'], resolve),
     },
     {
-      path: '/newshopdetail',
-      name : '/newhopdetail',
-      component: resolve => require(['@/components/newshopdetail/newshopdetail'], resolve),
+      path: '/shopdetail/:id',
+      name : 'shopdetail',
+      component: resolve => require(['@/components/shopdetail/shopdetail'], resolve),
     }
   ]
 })
