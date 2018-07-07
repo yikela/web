@@ -2,7 +2,7 @@
     <div class="newest">
         <div class="newest_title">
             <span class="fl">最新开奖</span>
-            <a href="./newestlist">更多开奖，点击查看>></a>
+            <router-link to="/reward">更多开奖，点击查看>></router-link>
         </div>
         <ul class="newest_content">
             <li v-for="(item,index) in items" :key="index" v-if="loading">

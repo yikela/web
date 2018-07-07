@@ -17,7 +17,7 @@
           </dd>
           <dd>第1期： <span>{{item.description.name}}</span></dd>
           <dd>商品价值：<span>{{item.price}}</span></dd>
-          <dd>揭晓时间：<span>{{item.updated_at}}</span></dd>
+          <dd>揭晓时间：<span>{{item.updated_at * 1000 | formDate}}</span></dd>
         </dl>
         <p>幸运云购码：<span>{{item.calc_result}}</span><router-link :to="'/windetail/'+item.id">查看详情</router-link></p>
       </li>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import formDate from '../../utils/formDate'
 export default {
   name: 'reward',
   data () {
@@ -40,6 +41,7 @@ export default {
     }
   },
   filters:{
+    formDate
   },
   methods:{
     get_list(){

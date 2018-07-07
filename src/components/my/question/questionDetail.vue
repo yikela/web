@@ -2,11 +2,22 @@
 <div>
   <div class="questionDetail" v-if="loading">
       <h4>问题详细</h4>
+      <p class="p"><span>提问时间：{{item.created_at * 1000 | formDate}}</span> </p>
       <p class="p"><span>问题编号：{{item.id}}</span> </p>
       <p class="p"><span>问题类型：</span>{{types[item.type_id]}}</p>
       <p class="p"><span>问题状态：</span>{{item.state == 1 ? '进行中':'解决'}}</p>
-      <div class="myself"><span>{{item.created_at * 1000 }}  你：</span><p class="box">{{item.body}}</p></div>
-      <div class="kefu" v-for="(i,index) in comItems" :key="index"><span>客服{{i.created_at * 1000 }}</span><p class="box">{{i.body}}</p></div>
+      <div class="addImage imageList" v-if="images.length>0">
+       <p class="labelspan">上传的图片列表：</p>
+        <span v-for="(i,index) in images" :key="index">
+          <img :src="baseUrl+i.path" alt="">
+        </span>
+      </div>
+      <p class="p"><span>问题描述：{{item.body}}</span> </p>
+      <p class="p" v-for="(i,index) in comItems" :key="index">
+        <span>客服回复：</span>
+        <span class="box">{{i.body}}</span>
+        <span>{{i.created_at * 1000 | formDate}}</span>
+      </p>
 </div>
   </div>
 </template>
@@ -19,6 +30,8 @@ import {
     mapActions
   } from 'vuex'
 import stateType from '../../../utils/questionState.js'
+import formDate from '../../../utils/formDate'
+const url  = require('../../../utils/issue_image.js')
 export default {
   name: 'questionDetail',
   data () {
@@ -27,13 +40,16 @@ export default {
       item:null,
       types:null,
       comItems:null,
-      loading:false
+      loading:false,
+      images:[],
+      baseUrl:null
     }
   },
   components:{
 
   },
    filters:{
+     formDate
   },
   computed:{
     ...mapGetters(['userLoginToken']),
@@ -58,6 +74,21 @@ export default {
         }
       })
     },
+    getPics(value){
+       API.get(API.getIssuePic.url+`?session=${this.userLoginToken}&issue_id=${this.id}`,{},{}).then(res => {
+         if(res.data.code == 200){
+           this.images = res.data.data
+         }else if(res.data.code == 401){
+          this.$toast(res.data.msg);
+          this.USER_SIGNOUT();
+          setTimeout(()=>{
+            this.$router.push('/login');
+          },2000)
+        }else{
+          this.$toast(res.data.msg);
+        }
+       })
+    },
     getComment(){
       API.get(API.getCommitList.url+ `?issue_id=${this.$route.params.id}&session=${this.userLoginToken}`,{},{}).then(res => {
         if(res.data.code == 200){
@@ -77,10 +108,12 @@ export default {
   created(){
     this.types = stateType
     this.id = this.$route.params.id
+    this.baseUrl = url.urlBase
   },
   mounted(){
       this.getIssueDetail();
       this.getComment();
+      this.getPics()
     
   }
 }
@@ -123,20 +156,7 @@ export default {
   line-height: 30px;
   text-indent: 5px;
 }
-.kefu{
-  padding:30px 0;
-}
-.kefu span{
-  float: right;
-  margin-left:5px;
-}
-.kefu p{
- float: right;
- /* border:1px solid #dfdfdf; */
- height:30px;
-  line-height: 30px;
-    text-indent: 5px;
-}
+
  h4{
   height:40px;
   line-height: 40px;
@@ -144,5 +164,13 @@ export default {
   font-weight: bold;
   font-size:18px;
   color:#000;
+}
+.addImage{
+  height: 150px;
+  position: relative;
+}
+.imageList span img{
+  width:150px;
+  height:80px;
 }
 </style>

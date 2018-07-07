@@ -34,18 +34,24 @@
                 <li>参与人</li>
                 <li>购买份数</li>
           </ul>
-          <div v-for="(item,index) in allResultDetail" :key="index" v-if="allResultDetail.length != 0 && !loading">
+          <div v-for="(item,index) in allResultDetail" :key="index" v-if="allResultDetail.length != 0 && loading">
               <div class="allbuy_content">
-                <p>{{item.created_at * 1000}}</p>
+                <p>{{item.created_at * 1000 | formDate}}</p>
               </div>
               <div class="allbuy_content">
                   <p>{{item.username}}</p>
               </div>
               <div class="allbuy_content">
                   <p>{{item.buy_count}}</p>
-              </div>
-               <p  tip="暂无数据" background-color="#fbf9fe" style="width:100%;text-align:center"  v-if="allResultDetail.length == 0 && !loading"></p>         
+              </div>    
           </div>
+          <p  tip="暂无数据" background-color="#fbf9fe" style="width:100%;text-align:center"  v-if="allResultDetail.length == 0 && loading"></p>
+          <div v-if="tempItems.length == 10 & loading" class="more"  @click="getBoughtInfo()">
+                加载更多
+          </div>
+          <div v-if="tempItems.length < 10 & loading" class="more" style="color:#999">
+            已全部加载
+          </div>     
            
       </div>
   </div>
@@ -58,6 +64,7 @@ import {
     mapMutations,
     mapActions
   } from 'vuex'
+  import formDate from '../../utils/formDate'
 export default {
   name: 'shopdetail',
   data () {
@@ -67,10 +74,13 @@ export default {
       },
       id:null,
       resultType:'allResult',
-      allResultDetail:null,
+      allResultDetail:[],
       loginAlert:true,
       number:1,
-      loading:true
+      loading:false,
+      loading:false,
+      lastId:null,
+      tempItems:[],
     }
   },
   components:{
@@ -79,6 +89,7 @@ export default {
     ...mapGetters(['userLoginToken']),
   },
   filters:{
+    formDate
   },
   methods:{
     ...mapMutations(['USER_SIGNIN','USER_SIGNOUT']),
@@ -86,27 +97,39 @@ export default {
     getDetail(){
       API.get(API.goodDetial.url,{id:this.id},{}).then(res => {
         if(res.data.code == 200){
-          this.item = res.data.data; 
-          console.log(res.data.data)
+          this.item = res.data.data;
         }
       })
     },
-    getBoughtInfo(){
-      API.get(API.boughtList.url+'?sell_id='+this.id + '&session='+this.userLoginToken,{},{}).then(res => {
+      getBoughtInfo(){
+      let url = null;
+      if(this.lastId){
+        url = API.boughtList.url + `?sell_id=${this.id}&session=${this.userLoginToken}&cursor_id=${this.lastId}`;
+      }else{
+        url = API.boughtList.url+`?sell_id=${this.id}&session=${this.userLoginToken}`
+      }
+      API.get(url,{},{}).then(res => {
         if(res.data.code == 200){
+          if(this.lastId){
+              this.allResultDetail = this.allResultDetail.concat(res.data.data);
+          }else{
             this.allResultDetail = res.data.data;
-            this.loginAlert = false;
-            this.loading = false 
+          }
+          
+          this.tempItems = res.data.data;
+          this.lastId = res.data.data[res.data.data.length -1].id;
+          this.loginAlert = false;
+          this.loading = true
         }else if(res.data.code == 401){
           this.$toast(res.data.msg);
           this.USER_SIGNOUT();
           setTimeout(()=>{
             this.$router.push('/login');
-          },1000)
+          },2000)
         }else{
           this.loginAlert = true;
-          this.loading = false 
-          this.$toast(res.data.msg);
+          this.loading = true 
+          this.$toast.text(res.data.msg);
         }
       })
     },
@@ -302,4 +325,12 @@ export default {
 .allbuy_content p{
     line-height:30px;
 }
+.more{
+      clear:both;
+      text-align:center;
+      width:100%;
+      padding:30px 0;
+      cursor: pointer;
+    }
+    
 </style>

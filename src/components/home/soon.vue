@@ -2,7 +2,7 @@
     <div class="soon">
         <div class="soon_title">
             <span class="fl">即将开奖</span>
-            <a href="./allreward">更多开奖，点击查看>></a>
+            <router-link to="/newestlist">更多开奖，点击查看>></router-link>
         </div>
         <ul class="soon_content">
             <li v-for="(item,index) in items" :key="index">

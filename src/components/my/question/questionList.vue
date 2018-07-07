@@ -17,7 +17,7 @@
             <th>{{i.id}}</th>
             <th>{{stateType[i.type_id]}}</th>
             <th>{{i.state ==1 ? '进行中':'已解决'}}</th>
-            <router-link :to="'/my/question/'+i.id" tag="th">查看</router-link>
+            <router-link :to="'/my/question/'+i.id" tag="th" class="look">查看</router-link>
           </tr>
         </tbody>
       </table>
@@ -102,5 +102,8 @@ table{
   font-weight: bold;
   font-size:18px;
   color:#000;
+}
+.look{
+  cursor: pointer;
 }
 </style>

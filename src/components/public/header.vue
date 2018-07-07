@@ -17,7 +17,7 @@
                     </div>
                 </li>
                 <li v-if="userLoginToken">
-                    <router-link to="/my" class="myself">个人中心</router-link>
+                    <router-link to="/my/order/list" class="myself">个人中心</router-link>
                     <span   style="font-size:14px;cursor:pointer" @click="logOut()">退出</span>
                 </li>
             </ul>

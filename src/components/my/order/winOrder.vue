@@ -16,7 +16,7 @@
               <th></th>
              <th>{{i.description.name}}</th>
               <th>{{i.price}}</th>
-              <th>{{i.state}}</th>
+              <th>{{i.state==4?'已到账':'未到账'}}</th>
               <!-- <router-link :to="'/exchange/'+ amount * rate" tag="th" style="color:blue">兑换</router-link> -->
             </tr>
         </tbody>
